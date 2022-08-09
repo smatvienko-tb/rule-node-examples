@@ -26,6 +26,7 @@ import org.thingsboard.rule.engine.api.TbNodeException;
 import org.thingsboard.rule.engine.api.util.TbNodeUtils;
 import org.thingsboard.server.common.data.plugin.ComponentType;
 import org.thingsboard.server.common.msg.TbMsg;
+import org.thingsboard.server.dao.group.EntityGroupService;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -59,6 +60,7 @@ public class TbCalculateSumNode implements TbNode {
 
     @Override
     public void onMsg(TbContext ctx, TbMsg msg) throws ExecutionException, InterruptedException, TbNodeException {
+        EntityGroupService entityGroupService = ctx.getPeContext().getEntityGroupService();
         double sum = 0;
         boolean hasRecords = false;
         try {
