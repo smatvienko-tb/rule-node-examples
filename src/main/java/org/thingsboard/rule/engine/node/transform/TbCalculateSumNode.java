@@ -24,6 +24,9 @@ import org.thingsboard.rule.engine.api.TbNode;
 import org.thingsboard.rule.engine.api.TbNodeConfiguration;
 import org.thingsboard.rule.engine.api.TbNodeException;
 import org.thingsboard.rule.engine.api.util.TbNodeUtils;
+import org.thingsboard.server.common.data.id.EntityGroupId;
+import org.thingsboard.server.common.data.id.EntityId;
+import org.thingsboard.server.common.data.id.UserId;
 import org.thingsboard.server.common.data.plugin.ComponentType;
 import org.thingsboard.server.common.msg.TbMsg;
 import org.thingsboard.server.dao.group.EntityGroupService;
@@ -58,7 +61,12 @@ public class TbCalculateSumNode implements TbNode {
 
     @Override
     public void onMsg(TbContext ctx, TbMsg msg) throws ExecutionException, InterruptedException, TbNodeException {
+
         EntityGroupService entityGroupService = ctx.getPeContext().getEntityGroupService();
+        EntityId entityId = UserId.fromString("02d63580-897b-4347-822b-b113b8adc43b");
+        EntityGroupId entityGroupId = EntityGroupId.fromString("05aa65a0-511c-40d5-87db-44828b05b24c");
+        boolean isEntityInGroup = entityGroupService.isEntityInGroup(ctx.getTenantId(), entityId, entityGroupId);
+
         double sum = 0;
         boolean hasRecords = false;
         try {
